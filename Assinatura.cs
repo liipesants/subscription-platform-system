@@ -7,10 +7,10 @@ namespace MiniSistemaGerenciarAssinatura
 {
     internal class Assinatura
     {
-        private string codigo;
-        private string nomeCliente;
-        private bool ativa;
-        private DateTime dataInicio;
+        protected string codigo;
+        protected string nomeCliente;
+        protected bool ativa;
+        protected DateTime dataInicio;
 
         public Assinatura(string codigo, string nomeCliente)
         {
