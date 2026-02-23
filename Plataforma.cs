@@ -19,7 +19,7 @@ namespace MiniSistemaGerenciarAssinatura
         }
         public void AdicionarAssinatura(Assinatura assinatura)
         {
-            if(!assinaturas.Any(a => a.Codigo == assinatura.Codigo))
+            if (!assinaturas.Any(a => a.Codigo == assinatura.Codigo))
             {
                 assinaturas.Add(assinatura);
                 Console.WriteLine("ASSINATURA CONTRATADA COM SUCESSO!");
@@ -33,7 +33,7 @@ namespace MiniSistemaGerenciarAssinatura
         {
             int cont = 1;
 
-            foreach(var ass in assinaturas)
+            foreach (var ass in assinaturas)
             {
                 Console.WriteLine($"-------| ASSINATURA: {cont} |-------");
                 Console.WriteLine($"Código da Assinatura: {ass.Codigo}");
@@ -67,7 +67,7 @@ namespace MiniSistemaGerenciarAssinatura
 
             foreach (var ass in assinaturas)
             {
-                if(ass.Codigo == codigo)
+                if (ass.Codigo == codigo)
                 {
                     ass.Desativar();
                     achei = true;
@@ -75,15 +75,29 @@ namespace MiniSistemaGerenciarAssinatura
             }
             if (!achei) Console.WriteLine("Erro: Assinatura não encontrada, informe o código de uma assinatura existente.");
         }
-        public double CalcularFaturamentoMensal()
+        public void CalcularFaturamentoMensal()
         {
-            double faturamentoMensal = 0;
+            double faturamentoTotalMensal = 0;
+            double faturamentoPremiumMensal = 0;
+            double faturamentoBasicoMensal = 0;
+            double faturamentoCorporativoMensal = 0;
 
             foreach (var ass in assinaturas)
             {
-                if (ass.Ativa) faturamentoMensal += ass.CalcularValorMensal();
+                if (ass.Ativa)
+                {
+                    faturamentoTotalMensal += ass.CalcularValorMensal();
+                    if (ass.GetType() == typeof(AssinaturaBasica)) faturamentoBasicoMensal += ass.CalcularValorMensal();
+                    if (ass.GetType() == typeof(AssinaturaCorporativa)) faturamentoCorporativoMensal += ass.CalcularValorMensal();
+                    if (ass.GetType() == typeof(AssinaturaPremium)) faturamentoPremiumMensal += ass.CalcularValorMensal();
+                }
             }
-            return faturamentoMensal;
+
+            Console.WriteLine("------| FATURAMENTO MENSAL DETALHADO |------");
+            Console.WriteLine($"Assinatura Básica: {faturamentoBasicoMensal}");
+            Console.WriteLine($"Assinatura Premium: {faturamentoPremiumMensal}");
+            Console.WriteLine($"Assinatura Corporativa: {faturamentoCorporativoMensal}");
+            Console.WriteLine($"FATURAMENTO TOTAL: {faturamentoTotalMensal}");
         }
     }
 }
