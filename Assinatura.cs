@@ -26,7 +26,7 @@ namespace MiniSistemaGerenciarAssinatura
         public string NomeCliente => nomeCliente;
         public bool Ativa => ativa;
         public DateTime DataInicio => dataInicio;
-        public string Tipo => "Irresoluta";
+        public virtual string Tipo => "Irresoluta";
 
         public void Desativar()
         {
